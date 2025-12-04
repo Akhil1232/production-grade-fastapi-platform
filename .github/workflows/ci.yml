@@ -1,0 +1,48 @@
+name: CI/CD
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+
+jobs:
+    build-and-scan:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+            security-events: write
+        
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Docker buildx
+              uses: docker/setup-buildx-action@v3
+            
+            - name: Login to GHCR
+              uses: docker/login-action@v3
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+            
+            - name: Build and Push
+              uses: docker/build-push-action@v6
+              with:
+                context: app
+                push: true
+                tags: ghcr.io/${{ github.repository }}/fastapi:${{ github.sha }}
+            
+            - name: Trivy vulnerability Scan
+              uses: aquasecurity/trivy-action@master
+              with:
+                image-ref: ghcr.io/${{ github.repository }}/fastapi:${{ github.sha }}
+                format: sarif
+                output: trivy-results.sarif
+            
+            - name: UPLOAD Sarif
+              uses: github/codeql-action/upload-sarif@v3
+              with:
+                sarif_file: trivy-results.sarif
+            

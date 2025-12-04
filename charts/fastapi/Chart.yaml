@@ -1,0 +1,4 @@
+apiVersion: v3
+name: fastapi
+version: 0.1.0
+type: application
