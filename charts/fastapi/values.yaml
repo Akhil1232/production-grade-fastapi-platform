@@ -1,6 +1,6 @@
 replicaCount: 3
 image: 
-  repository: ghcr.io/akhil1232/payguard-ai
+  repository: ghcr.io/akhil1232/production-grade-fastapi-platform/payguard-ai
   tag: latest
   pullPolicy: IfNotPresent
 service:

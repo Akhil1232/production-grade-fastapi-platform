@@ -17,6 +17,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
+            - name: Lowercase repo owner
+              run: |
+                echo "GHCR_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
             - name: Set up Docker buildx
               uses: docker/setup-buildx-action@v3
             
@@ -32,12 +36,12 @@ jobs:
               with:
                 context: app
                 push: true
-                tags: ghcr.io/${{ github.repository }}/payguard-ai:${{ github.sha }}
+                tags: ghcr.io/${{ env.GHCR_OWNER }}/production-grade-fastapi-platform/payguard-ai:${{ github.sha }}
             
             - name: Trivy vulnerability Scan
               uses: aquasecurity/trivy-action@master
               with:
-                image-ref: ghcr.io/${{ github.repository }}/payguard-ai:${{ github.sha }}
+                image-ref: ghcr.io/${{ env.GHCR_OWNER }}/production-grade-fastapi-platform/payguard-ai:${{ github.sha }}
                 format: sarif
                 output: trivy-results.sarif
             
