@@ -1,14 +1,14 @@
 #Build Stage
 FROM python:3.12-slim AS builder
 WORKDIR /app
-COPY app/requirements.txt .
-RUN pip install -r requirements --user--no-cache-dir
+COPY requirements.txt .
+RUN pip install -r requirements.txt --user--no-cache-dir
 
 # Final Stage - tiny and secure
 FROM python:3.12-slim
 WORKDIR /app
 COPY --from=builder /root/.local /root/.local
-COPY app/main.py .
+COPY main.py .
 ENV PATH=/root/.local/bin:$PATH
 ENV PORT=8000
 EXPOSE 8000
