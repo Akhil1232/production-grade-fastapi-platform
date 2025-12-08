@@ -2,7 +2,7 @@
 FROM python:3.12-slim AS builder
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install -r requirements.txt --user--no-cache-dir
+RUN pip install --user --no-cache-dir -r requirements.txt 
 
 # Final Stage - tiny and secure
 FROM python:3.12-slim
