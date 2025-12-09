@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha
+kind: Application 
+metadata:
+  name: payguard-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Akhil1232/production-grade-fastapi-platform.git
+    targetRevision: main
+    path: infra/argocd/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: payguard
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
