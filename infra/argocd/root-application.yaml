@@ -11,7 +11,7 @@ spec:
     path: infra/argocd/apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: payguard
+    namespace: payguard-dev
   syncPolicy:
     automated:
       prune: true
