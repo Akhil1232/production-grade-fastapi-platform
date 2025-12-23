@@ -16,6 +16,8 @@ spec:
           repository: ghcr.io/akhil1232/production-grade-fastapi-platform/payguard-ai
           tag: latest
           pullPolicy: Always
+        imagePullSecrets:
+          - name: ghcr-secret
         service:
           type: ClusterIP
           port: 8000
