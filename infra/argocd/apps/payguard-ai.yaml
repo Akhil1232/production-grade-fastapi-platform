@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Akhil1232/production-grade-fastapi-platform.git
+    repoURL: https://github.com/akhil1232/production-grade-fastapi-platform.git
     targetRevision: main
     path: charts/fastapi
     helm:
