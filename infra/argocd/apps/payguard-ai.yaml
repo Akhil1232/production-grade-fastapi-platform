@@ -14,7 +14,7 @@ spec:
         replicaCount: 2
         image:
           repository: ghcr.io/akhil1232/production-grade-fastapi-platform/payguard-ai
-          tag: latest
+          tag: bab797ac5bff630167d12877a27247df8b932dca
           pullPolicy: Always
         imagePullSecrets:
           - name: ghcr-secret
