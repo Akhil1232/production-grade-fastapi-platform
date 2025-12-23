@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-payguard-ai"
+  labels:
+    app: payguard-ai
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: payguard-ai
+  template:
+    metadata:
+      labels:
+        app: payguard-ai
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: payguard-ai
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: ""  # We'll add Postgres later
+            - name: REDIS_URL
+              value: ""  # We'll add Redis later
